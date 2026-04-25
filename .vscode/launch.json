@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:LA_Hacks}",
+            "name": "Debug LA_Hacks",
+            "target": "LA_Hacks",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug LA_Hacks"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:LA_Hacks}",
+            "name": "Release LA_Hacks",
+            "target": "LA_Hacks",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release LA_Hacks"
+        }
+    ]
+}

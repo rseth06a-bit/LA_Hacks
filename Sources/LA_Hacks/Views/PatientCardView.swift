@@ -55,7 +55,7 @@ struct PatientCardView: View {
             }
         }
         .padding(16)
-        .background(Color(.systemBackground))
+        .background(Color.white)
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 2)
     }

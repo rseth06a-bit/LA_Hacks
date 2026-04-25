@@ -1,0 +1,59 @@
+{
+  "": {
+    "swift-dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/master.swiftdeps"
+  },
+  "/Users/spoorthy/LA_Hacks/Sources/LA_Hacks/App.swift": {
+    "dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/App.d",
+    "object": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/App.swift.o",
+    "swiftmodule": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/App~partial.swiftmodule",
+    "swift-dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/App.swiftdeps"
+  },
+  "/Users/spoorthy/LA_Hacks/Sources/LA_Hacks/ContentView.swift": {
+    "dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/ContentView.d",
+    "object": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/ContentView.swift.o",
+    "swiftmodule": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/ContentView~partial.swiftmodule",
+    "swift-dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/ContentView.swiftdeps"
+  },
+  "/Users/spoorthy/LA_Hacks/Sources/LA_Hacks/Models/Bed.swift": {
+    "dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/Bed.d",
+    "object": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/Bed.swift.o",
+    "swiftmodule": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/Bed~partial.swiftmodule",
+    "swift-dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/Bed.swiftdeps"
+  },
+  "/Users/spoorthy/LA_Hacks/Sources/LA_Hacks/Models/LabResult.swift": {
+    "dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/LabResult.d",
+    "object": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/LabResult.swift.o",
+    "swiftmodule": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/LabResult~partial.swiftmodule",
+    "swift-dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/LabResult.swiftdeps"
+  },
+  "/Users/spoorthy/LA_Hacks/Sources/LA_Hacks/Models/Patient.swift": {
+    "dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/Patient.d",
+    "object": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/Patient.swift.o",
+    "swiftmodule": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/Patient~partial.swiftmodule",
+    "swift-dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/Patient.swiftdeps"
+  },
+  "/Users/spoorthy/LA_Hacks/Sources/LA_Hacks/Services/APIService.swift": {
+    "dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/APIService.d",
+    "object": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/APIService.swift.o",
+    "swiftmodule": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/APIService~partial.swiftmodule",
+    "swift-dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/APIService.swiftdeps"
+  },
+  "/Users/spoorthy/LA_Hacks/Sources/LA_Hacks/Views/AgentActivityView.swift": {
+    "dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/AgentActivityView.d",
+    "object": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/AgentActivityView.swift.o",
+    "swiftmodule": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/AgentActivityView~partial.swiftmodule",
+    "swift-dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/AgentActivityView.swiftdeps"
+  },
+  "/Users/spoorthy/LA_Hacks/Sources/LA_Hacks/Views/PatientCardView.swift": {
+    "dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/PatientCardView.d",
+    "object": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/PatientCardView.swift.o",
+    "swiftmodule": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/PatientCardView~partial.swiftmodule",
+    "swift-dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/PatientCardView.swiftdeps"
+  },
+  "/Users/spoorthy/LA_Hacks/Sources/LA_Hacks/Views/PatientDetailView.swift": {
+    "dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/PatientDetailView.d",
+    "object": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/PatientDetailView.swift.o",
+    "swiftmodule": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/PatientDetailView~partial.swiftmodule",
+    "swift-dependencies": "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/PatientDetailView.swiftdeps"
+  }
+}

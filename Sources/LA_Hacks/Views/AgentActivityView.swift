@@ -50,19 +50,19 @@ struct AgentActivityView: View {
                 }
             }
             .navigationTitle("Agent Activity")
-            .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .automatic) {
                     HStack(spacing: 4) {
                         Circle()
                             .fill(Color.green)
                             .frame(width: 8, height: 8)
                         Text("Live")
-                            .font(.system(size: 13))
-                            .foregroundColor(.secondary)
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.green)
                     }
                 }
             }
+
         }
         .onReceive(timer) { _ in
             pollForNewEvents()
@@ -89,6 +89,12 @@ struct AgentActivityView: View {
 // --- Single event row ---
 struct AgentEventRow: View {
     let event: AgentEvent
+
+    static let formatter: RelativeDateTimeFormatter = {
+        let f = RelativeDateTimeFormatter()
+        f.unitsStyle = .full
+        return f
+    }()
 
     var dotColor: Color {
         switch event.agentType {
@@ -133,7 +139,7 @@ struct AgentEventRow: View {
             Spacer()
 
             // --- Timestamp ---
-            Text(event.timestamp.formatted(.relative(presentation: .named)))
+            Text(Self.formatter.localizedString(for: event.timestamp, relativeTo: Date()))
                 .font(.system(size: 11))
                 .foregroundColor(.secondary)
                 .padding(.top, 2)

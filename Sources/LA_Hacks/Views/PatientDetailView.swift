@@ -23,7 +23,7 @@ struct PatientDetailView: View {
                 }
                 .padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color(.systemBackground))
+                .background(Color.white)
                 .cornerRadius(12)
                 .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 2)
 
@@ -59,11 +59,8 @@ struct PatientDetailView: View {
             .padding()
         }
         .navigationTitle("Patient Detail")
-        .navigationBarTitleDisplayMode(.inline)
-        .alert("Agent Triggered", isPresented: $showingAlert) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(actionMessage)
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Agent Triggered"), message: Text(actionMessage), dismissButton: .default(Text("OK")))
         }
     }
 

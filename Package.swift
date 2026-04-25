@@ -7,12 +7,12 @@ let package = Package(
         .macOS(.v11)
     ],
     products: [
-        .library(name: "LA_Hacks", targets: ["LA_Hacks"])
+        .executable(name: "LA_Hacks", targets: ["LA_Hacks"])
     ],
     dependencies: [
     ],
     targets: [
-        .target(
+        .executableTarget(
             name: "LA_Hacks",
             dependencies: []
         )
