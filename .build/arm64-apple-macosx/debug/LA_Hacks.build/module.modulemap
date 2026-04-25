@@ -1,4 +1,0 @@
-module LA_Hacks {
-    header "/Users/spoorthy/LA_Hacks/.build/arm64-apple-macosx/debug/LA_Hacks.build/LA_Hacks-Swift.h"
-    requires objc
-}
