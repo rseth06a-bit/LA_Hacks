@@ -51,6 +51,23 @@ class APIService {
         return try decoder.decode([LabResult].self, from: data)
     }
 
+    // MARK: - Fetch Agent Events
+    static func fetchAgentEvents() async throws -> [AgentEventDTO] {
+        guard let url = URL(string: "\(baseURL)/agent-events") else {
+            throw URLError(.badURL)
+        }
+
+        let (data, response) = try await URLSession.shared.data(from: url)
+
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw URLError(.badServerResponse)
+        }
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return try decoder.decode([AgentEventDTO].self, from: data)
+    }
+
     // MARK: - Trigger Agent
     static func triggerAgent(agentAddress: String) async throws -> TriggerResponse {
         guard let url = URL(string: "\(baseURL)/trigger-agent") else {
@@ -79,4 +96,33 @@ class APIService {
 struct TriggerResponse: Codable {
     let success: Bool
     let message: String
+}
+
+// MARK: - Agent Event DTO (Data Transfer Object)
+struct AgentEventDTO: Codable {
+    let id: String
+    let agentName: String
+    let agentType: String
+    let message: String
+    let timestamp: Date
+
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case agentName, agentType, message, timestamp
+    }
+
+    func toAgentEvent() -> AgentEvent {
+        let type: AgentEvent.AgentType
+        switch agentType.lowercased() {
+        case "lab":
+            type = .lab
+        case "bed":
+            type = .bed
+        case "scheduling":
+            type = .scheduling
+        default:
+            type = .lab
+        }
+        return AgentEvent(agentName: agentName, agentType: type, message: message, timestamp: timestamp)
+    }
 }

@@ -70,17 +70,19 @@ struct AgentActivityView: View {
     }
 
     func pollForNewEvents() {
-        // When Dev 1 has the API ready, replace this with a real call:
-        // let newEvents = await APIService.shared.fetchAgentEvents()
-        // For now we simulate a new event coming in occasionally
-        let shouldAddEvent = Bool.random()
-        if shouldAddEvent {
-            withAnimation(.easeInOut(duration: 0.4)) {
-                let newEvent = AgentEvent.randomMockEvent()
-                events.insert(newEvent, at: 0)
-                if events.count > 50 {
-                    events = Array(events.prefix(50))
+        Task {
+            do {
+                let eventDTOs = try await APIService.fetchAgentEvents()
+                let newEvents = eventDTOs.map { $0.toAgentEvent() }
+                withAnimation(.easeInOut(duration: 0.4)) {
+                    events = newEvents.sorted { $0.timestamp > $1.timestamp }
+                    if events.count > 50 {
+                        events = Array(events.prefix(50))
+                    }
                 }
+            } catch {
+                print("Error polling agent events: \(error)")
+                // Keep showing mock data if API fails
             }
         }
     }
