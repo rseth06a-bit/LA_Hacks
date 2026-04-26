@@ -1,11 +1,11 @@
 import SwiftUI
 
-@available(macOS 11.0, *)
+@available(macOS 12.0, *)
 @main
 struct LA_HacksApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DashboardView()
         }
     }
 }
