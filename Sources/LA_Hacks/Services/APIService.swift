@@ -1,7 +1,7 @@
 import Foundation
 
 class APIService {
-    static let baseURL = "YOUR_API_GATEWAY_URL"
+    static let baseURL = "https://jldwa4t8ph.execute-api.us-east-1.amazonaws.com/"
 
     // MARK: - Fetch Patients
     static func fetchPatients() async throws -> [Patient] {
