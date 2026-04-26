@@ -1,7 +1,7 @@
 import Foundation
 
 class APIService {
-    static let baseURL = "https://jldwa4t8ph.execute-api.us-east-1.amazonaws.com/"
+    static let baseURL = "https://jldwa4t8ph.execute-api.us-east-1.amazonaws.com"
 
     // MARK: - Fetch Patients
     static func fetchPatients() async throws -> [Patient] {
@@ -48,6 +48,7 @@ class APIService {
         }
 
         let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
         return try decoder.decode([LabResult].self, from: data)
     }
 
@@ -69,7 +70,7 @@ class APIService {
     }
 
     // MARK: - Trigger Agent
-    static func triggerAgent(agentAddress: String) async throws -> TriggerResponse {
+    static func triggerAgent(agentType: String, payload: [String: String]) async throws {
         guard let url = URL(string: "\(baseURL)/trigger-agent") else {
             throw URLError(.badURL)
         }
@@ -78,14 +79,14 @@ class APIService {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let body = ["agentAddress": agentAddress]
-        request.httpBody = try JSONEncoder().encode(body)
+        let body: [String: Any] = ["agent": agentType, "payload": payload]
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
-        let (data, response) = try await URLSession.shared.data(for: request)
-
+        let (_, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw URLError(.badServerResponse)
         }
+    }
 
         let decoder = JSONDecoder()
         return try decoder.decode(TriggerResponse.self, from: data)

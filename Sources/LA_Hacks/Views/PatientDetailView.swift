@@ -66,25 +66,23 @@ struct PatientDetailView: View {
 
     func requestLab() {
         Task {
-            do {
-                let response = try await APIService.triggerAgent(agentAddress: "agent1qdakmmh9c9m0ga32j2u5w9f0xe2rmans23cftwz2udwqemtk3sxcyqcpkvx")
-                actionMessage = "Lab results agent triggered successfully: \(response.message)"
-            } catch {
-                actionMessage = "Failed to trigger lab agent: \(error.localizedDescription)"
-            }
-            showingAlert = true
+            try? await APIService.triggerAgent(
+                agentType: "lab",
+                payload: ["patient_id": patient.id, "patient_name": patient.name]
+            )
         }
+        actionMessage = "Lab results agent triggered for \(patient.name)."
+        showingAlert = true
     }
 
     func transferBed() {
         Task {
-            do {
-                let response = try await APIService.triggerAgent(agentAddress: "agent1qge0epgnurd7szrfw8qks0ae6vpg3k88xmngttn6m4ha70wzc89ju6zsdy5")
-                actionMessage = "Bed management agent triggered successfully: \(response.message)"
-            } catch {
-                actionMessage = "Failed to trigger bed agent: \(error.localizedDescription)"
-            }
-            showingAlert = true
+            try? await APIService.triggerAgent(
+                agentType: "bed",
+                payload: ["patient_id": patient.id, "patient_name": patient.name, "bed_id": patient.room]
+            )
         }
+        actionMessage = "Bed management agent triggered for \(patient.name)."
+        showingAlert = true
     }
 }
