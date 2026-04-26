@@ -23,8 +23,8 @@ class LabResponse(Model):
 agent = Agent(
     name="lab-results-agent",
     seed="carecoord-lab-results-seed-lahacks",
-    port=8001,
-    endpoint=["http://127.0.0.1:8001/submit"]
+    port=8002,
+    endpoint=["http://127.0.0.1:8002/submit"]
 )
 
 print(f"Lab Results Agent address: {agent.address}")

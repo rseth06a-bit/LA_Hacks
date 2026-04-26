@@ -19,8 +19,8 @@ class BedAssignment(Model):
 agent = Agent(
     name="bed-management-agent",
     seed="carecoord-bed-management-seed-lahacks",
-    port=8002,
-    endpoint=["http://127.0.0.1:8002/submit"]
+    port=8003,
+    endpoint=["http://127.0.0.1:8003/submit"]
 )
 
 print(f"Bed Management Agent address: {agent.address}")

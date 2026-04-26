@@ -4,22 +4,25 @@ struct PatientCardView: View {
     let patient: Patient
     var onRequestLab: () -> Void
     var onTransferBed: () -> Void
+    var onScheduleAppointment: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 14) {
 
-            // --- Top row: name + room ---
             HStack {
                 Text(patient.name)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(.primary)
                 Spacer()
-                Text(patient.room)
-                    .font(.system(size: 13))
-                    .foregroundColor(.secondary)
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.gray.opacity(0.6))
             }
 
-            // --- Badges: status + priority ---
+            Text("Room \(patient.room)")
+                .font(.system(size: 13))
+                .foregroundColor(.secondary)
+
             HStack(spacing: 8) {
                 StatusBadge(status: patient.status)
                 PriorityBadge(priority: patient.priority)
@@ -27,37 +30,43 @@ struct PatientCardView: View {
 
             Divider()
 
-            // --- Action buttons ---
-            HStack(spacing: 12) {
+            HStack(spacing: 0) {
                 Button(action: onRequestLab) {
                     Label("Request Lab", systemImage: "flask")
                         .font(.system(size: 13, weight: .medium))
                         .foregroundColor(.blue)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.blue.opacity(0.5), lineWidth: 1)
-                        )
+                        .padding(.vertical, 6)
                 }
 
+                Divider()
+                    .frame(height: 24)
+
                 Button(action: onTransferBed) {
-                    Label("Transfer Bed", systemImage: "bed.double")
+                    Label("Transfer", systemImage: "arrow.left.arrow.right")
                         .font(.system(size: 13, weight: .medium))
-                        .foregroundColor(.gray)
+                        .foregroundColor(.blue)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                        )
+                        .padding(.vertical, 6)
                 }
+            }
+
+            Divider()
+
+            Button(action: onScheduleAppointment) {
+                Label("Schedule Appointment", systemImage: "calendar.badge.plus")
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundColor(.blue)
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
         }
         .padding(16)
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.06), radius: 6, x: 0, y: 2)
+        .background(Color(nsColor: .textBackgroundColor))
+        .clipShape(RoundedRectangle(cornerRadius: 14))
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .stroke(Color(nsColor: .separatorColor), lineWidth: 1)
+        )
     }
 }
 

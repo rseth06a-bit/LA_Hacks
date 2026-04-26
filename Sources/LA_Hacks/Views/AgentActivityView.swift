@@ -15,14 +15,38 @@ struct AgentEvent: Identifiable {
 
 // --- Main view ---
 struct AgentActivityView: View {
-    @State private var events: [AgentEvent] = AgentEvent.mockEvents()
-    @State private var isPolling = false
+    @State private var events: [AgentEvent] = []
+    @State private var isLoading = false
+    @State private var errorMessage: String?
     let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
 
     var body: some View {
         NavigationView {
             Group {
-                if events.isEmpty {
+                if isLoading && events.isEmpty {
+                    VStack(spacing: 16) {
+                        ProgressView("Loading agent activity...")
+                        Text("Polling CareCoord for live agent events.")
+                            .font(.system(size: 13))
+                            .foregroundColor(.secondary)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if let errorMessage {
+                    VStack(spacing: 16) {
+                        Text("Unable to load agent activity")
+                            .font(.title3.weight(.semibold))
+                        Text(errorMessage)
+                            .font(.system(size: 13))
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                        Button("Retry") {
+                            loadEvents()
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else if events.isEmpty {
                     VStack(spacing: 12) {
                         Image(systemName: "antenna.radiowaves.left.and.right")
                             .font(.system(size: 40))
@@ -54,36 +78,47 @@ struct AgentActivityView: View {
                 ToolbarItem(placement: .automatic) {
                     HStack(spacing: 4) {
                         Circle()
-                            .fill(Color.green)
+                            .fill(events.isEmpty ? Color.gray : Color.green)
                             .frame(width: 8, height: 8)
-                        Text("Live")
+                        Text(events.isEmpty ? "Disconnected" : "Live")
                             .font(.system(size: 12, weight: .medium))
-                            .foregroundColor(.green)
+                            .foregroundColor(events.isEmpty ? .gray : .green)
                     }
                 }
             }
-
+        }
+        .onAppear {
+            loadEvents()
         }
         .onReceive(timer) { _ in
-            pollForNewEvents()
+            loadEvents()
         }
     }
 
-    func pollForNewEvents() {
+    private func loadEvents() {
         Task {
+            if events.isEmpty {
+                isLoading = true
+            }
+            errorMessage = nil
+
             do {
+                async let patientsPoll = APIService.fetchPatients()
+                _ = try await patientsPoll
                 let eventDTOs = try await APIService.fetchAgentEvents()
-                let newEvents = eventDTOs.map { $0.toAgentEvent() }
+                let newEvents = eventDTOs.map { $0.toAgentEvent() }.sorted { $0.timestamp > $1.timestamp }
+
                 withAnimation(.easeInOut(duration: 0.4)) {
-                    events = newEvents.sorted { $0.timestamp > $1.timestamp }
+                    events = newEvents
                     if events.count > 50 {
                         events = Array(events.prefix(50))
                     }
                 }
             } catch {
-                print("Error polling agent events: \(error)")
-                // Keep showing mock data if API fails
+                errorMessage = error.localizedDescription
             }
+
+            isLoading = false
         }
     }
 }
@@ -116,8 +151,6 @@ struct AgentEventRow: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-
-            // --- Colored icon dot ---
             ZStack {
                 Circle()
                     .fill(dotColor.opacity(0.15))
@@ -127,7 +160,6 @@ struct AgentEventRow: View {
                     .foregroundColor(dotColor)
             }
 
-            // --- Agent name + message ---
             VStack(alignment: .leading, spacing: 3) {
                 Text(event.agentName)
                     .font(.system(size: 13, weight: .semibold))
@@ -140,7 +172,6 @@ struct AgentEventRow: View {
 
             Spacer()
 
-            // --- Timestamp ---
             Text(Self.formatter.localizedString(for: event.timestamp, relativeTo: Date()))
                 .font(.system(size: 11))
                 .foregroundColor(.secondary)
@@ -148,40 +179,5 @@ struct AgentEventRow: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-    }
-}
-
-// --- Mock data for demo ---
-extension AgentEvent {
-    static func mockEvents() -> [AgentEvent] {
-        [
-            AgentEvent(agentName: "Lab Results Agent", agentType: .lab,
-                message: "CBC for Maria Lopez: 14.2 g/dL — NORMAL (range: 12–16)",
-                timestamp: Date().addingTimeInterval(-60)),
-            AgentEvent(agentName: "Bed Management Agent", agentType: .bed,
-                message: "Bed 4B freed by John Carter. Reassigned to Sofia Reyes.",
-                timestamp: Date().addingTimeInterval(-180)),
-            AgentEvent(agentName: "Scheduling Agent", agentType: .scheduling,
-                message: "Cardiology consult scheduled for James Miller at 2:30 PM.",
-                timestamp: Date().addingTimeInterval(-300)),
-            AgentEvent(agentName: "Lab Results Agent", agentType: .lab,
-                message: "Glucose for David Kim: 210 mg/dL — ABNORMAL (range: 70–100)",
-                timestamp: Date().addingTimeInterval(-600)),
-            AgentEvent(agentName: "Bed Management Agent", agentType: .bed,
-                message: "Bed 2A freed by Anna Scott. No patients in queue — marked available.",
-                timestamp: Date().addingTimeInterval(-900)),
-        ]
-    }
-
-    static func randomMockEvent() -> AgentEvent {
-        let events: [(String, AgentType, String)] = [
-            ("Lab Results Agent", .lab, "Potassium for Elena Torres: 3.2 mEq/L — ABNORMAL (range: 3.5–5.0)"),
-            ("Bed Management Agent", .bed, "Bed 6C freed by Marcus Webb. Reassigned to James Miller."),
-            ("Scheduling Agent", .scheduling, "Neurology consult scheduled for Maria Lopez at 4:00 PM."),
-            ("Lab Results Agent", .lab, "WBC for Sofia Reyes: 7.8 K/uL — NORMAL (range: 4.5–11.0)"),
-            ("Bed Management Agent", .bed, "Bed 1A freed by David Kim. No patients in queue — marked available."),
-        ]
-        let pick = events.randomElement()!
-        return AgentEvent(agentName: pick.0, agentType: pick.1, message: pick.2, timestamp: Date())
     }
 }
