@@ -14,13 +14,13 @@ struct Patient: Identifiable, Codable {
 }
 
 enum PatientStatus: String, Codable {
-    case admitted = "admitted"
-    case pendingDischarge = "pending_discharge"
-    case discharged = "discharged"
+    case admitted = "Admitted"
+    case pendingDischarge = "Pending Discharge"
+    case discharged = "Discharged"
 }
 
 enum PatientPriority: String, Codable {
-    case high = "high"
-    case medium = "medium"
-    case low = "low"
+    case high = "High"
+    case medium = "Medium"
+    case low = "Low"
 }

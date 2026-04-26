@@ -81,8 +81,7 @@ struct AgentActivityView: View {
                     }
                 }
             } catch {
-                print("Error polling agent events: \(error)")
-                // Keep showing mock data if API fails
+                // API not ready yet — keep showing mock data silently
             }
         }
     }

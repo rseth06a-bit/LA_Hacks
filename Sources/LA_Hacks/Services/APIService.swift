@@ -88,9 +88,6 @@ class APIService {
         }
     }
 
-        let decoder = JSONDecoder()
-        return try decoder.decode(TriggerResponse.self, from: data)
-    }
 }
 
 // MARK: - Response Models
