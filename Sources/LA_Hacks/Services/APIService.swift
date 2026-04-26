@@ -71,7 +71,7 @@ class APIService {
 
     // MARK: - Trigger Agent
     static func triggerAgent(agentType: String, payload: [String: String]) async throws {
-        guard let url = URL(string: "\(baseURL)/trigger-agent") else {
+        guard let url = URL(string: "\(baseURL)/agents/trigger") else {
             throw URLError(.badURL)
         }
 
@@ -96,31 +96,3 @@ struct TriggerResponse: Codable {
     let message: String
 }
 
-// MARK: - Agent Event DTO (Data Transfer Object)
-struct AgentEventDTO: Codable {
-    let id: String
-    let agentName: String
-    let agentType: String
-    let message: String
-    let timestamp: Date
-
-    enum CodingKeys: String, CodingKey {
-        case id = "_id"
-        case agentName, agentType, message, timestamp
-    }
-
-    func toAgentEvent() -> AgentEvent {
-        let type: AgentEvent.AgentType
-        switch agentType.lowercased() {
-        case "lab":
-            type = .lab
-        case "bed":
-            type = .bed
-        case "scheduling":
-            type = .scheduling
-        default:
-            type = .lab
-        }
-        return AgentEvent(agentName: agentName, agentType: type, message: message, timestamp: timestamp)
-    }
-}

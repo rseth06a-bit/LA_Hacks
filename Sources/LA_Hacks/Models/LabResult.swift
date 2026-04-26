@@ -2,13 +2,13 @@ import Foundation
 
 struct LabResult: Identifiable, Codable {
     let id: String
-    let patientId: String
-    let testName: String
-    let result: String
-    let date: Date
+    let patient: String
+    let test: String
+    let status: String
+    let timestamp: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case patientId, testName, result, date
+        case patient, test, status, timestamp
     }
 }

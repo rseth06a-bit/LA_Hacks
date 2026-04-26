@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct PatientDetailView: View {
+    @Environment(\.dismiss) private var dismiss
     let patient: Patient
     @State private var actionMessage: String = ""
     @State private var showingAlert = false
@@ -59,6 +60,11 @@ struct PatientDetailView: View {
             .padding()
         }
         .navigationTitle("Patient Detail")
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Close") { dismiss() }
+            }
+        }
         .alert(isPresented: $showingAlert) {
             Alert(title: Text("Agent Triggered"), message: Text(actionMessage), dismissButton: .default(Text("OK")))
         }
@@ -68,7 +74,9 @@ struct PatientDetailView: View {
         Task {
             try? await APIService.triggerAgent(
                 agentType: "lab",
-                payload: ["patient_id": patient.id, "patient_name": patient.name]
+                payload: ["patient_id": patient.id, 
+                        "patient_name": patient.name,
+                        "action": "Lab results requested for \(patient.name)"]
             )
         }
         actionMessage = "Lab results agent triggered for \(patient.name)."
@@ -79,7 +87,10 @@ struct PatientDetailView: View {
         Task {
             try? await APIService.triggerAgent(
                 agentType: "bed",
-                payload: ["patient_id": patient.id, "patient_name": patient.name, "bed_id": patient.room]
+                payload: ["patient_id": patient.id,
+                        "patient_name": patient.name,
+                        "bed_id": patient.room,
+                        "action": "Bed transfer requested for \(patient.name) in room \(patient.room)"]
             )
         }
         actionMessage = "Bed management agent triggered for \(patient.name)."

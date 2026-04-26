@@ -144,7 +144,7 @@ struct BedRowView: View {
                 Text(bed.isOccupied ? "Occupied" : "Available")
                     .font(.subheadline)
                     .foregroundColor(bed.isOccupied ? .red : .green)
-                if let patientId = bed.patientId {
+                if let patientId = bed.patient {
                     Text("Patient ID: \(patientId)")
                         .font(.caption)
                         .foregroundColor(.secondary)
@@ -165,17 +165,17 @@ struct LabResultRowView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                Text(result.testName)
+                Text(result.test)
                     .font(.headline)
                 Spacer()
-                Text(result.result)
+                Text(result.status)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
-            Text("Patient ID: \(result.patientId)")
+            Text("Patient ID: \(result.patient)")
                 .font(.caption)
                 .foregroundColor(.secondary)
-            Text(result.date, style: .date)
+            Text(result.timestamp ?? "No date")
                 .font(.caption2)
                 .foregroundColor(.secondary)
         }
